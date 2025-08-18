@@ -1,0 +1,23 @@
+{
+	"name": "to-do",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"dev": "tsx watch ./src/server.ts"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"type": "module",
+	"devDependencies": {
+		"@biomejs/biome": "^2.2.0",
+		"@types/node": "^24.3.0",
+		"tsx": "^4.20.4",
+		"typescript": "^5.9.2",
+		"ultracite": "^5.2.3"
+	},
+	"dependencies": {
+		"fastify": "^5.5.0"
+	}
+}
