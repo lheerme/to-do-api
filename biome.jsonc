@@ -10,6 +10,9 @@
     "rules": {
       "suspicious": {
         "noConsole": "info"
+      },
+      "style": {
+        "noMagicNumbers": "off"
       }
     }
   }
