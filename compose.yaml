@@ -1,0 +1,10 @@
+services:
+  app:
+    build: .
+    container_name: to-do-app
+    working_dir: /app
+    volumes:
+      - .:/app
+      - /app/node_modules
+    ports:
+      - 8080:8080
