@@ -1,27 +1,30 @@
 {
-	"name": "to-do",
-	"version": "1.0.0",
-	"description": "",
-	"main": "index.js",
-	"scripts": {
-		"dev": "tsx watch ./src/server.ts"
-	},
-	"keywords": [],
-	"author": "",
-	"license": "ISC",
-	"type": "module",
-	"devDependencies": {
-		"@biomejs/biome": "^2.2.0",
-		"@types/node": "^24.3.0",
-		"@types/pg": "^8.15.5",
-		"dotenv": "^17.2.1",
-		"tsx": "^4.20.4",
-		"typescript": "^5.9.2",
-		"ultracite": "^5.2.3"
-	},
-	"dependencies": {
-		"fastify": "^5.5.0",
-		"pg": "^8.16.3",
-		"zod": "^4.0.17"
-	}
+  "name": "to-do",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "tsx watch ./src/server.ts",
+    "migrate:create": "node-pg-migrate -j ts -m ./src/migrations create",
+    "migrate:up": "node-pg-migrate --tsx -m ./src/migrations up"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "devDependencies": {
+    "@biomejs/biome": "^2.2.0",
+    "@types/node": "^24.3.0",
+    "@types/pg": "^8.15.5",
+    "dotenv": "^17.2.1",
+    "node-pg-migrate": "^8.0.3",
+    "tsx": "^4.20.4",
+    "typescript": "^5.9.2",
+    "ultracite": "^5.2.3"
+  },
+  "dependencies": {
+    "fastify": "^5.5.0",
+    "pg": "^8.16.3",
+    "zod": "^4.0.17"
+  }
 }
