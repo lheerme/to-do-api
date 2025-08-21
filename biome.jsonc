@@ -11,6 +11,9 @@
       "suspicious": {
         "noConsole": "info"
       },
+      "nursery": {
+        "useConsistentTypeDefinitions": "off"
+      },
       "style": {
         "noMagicNumbers": "off"
       }
