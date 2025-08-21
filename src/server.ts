@@ -1,17 +1,9 @@
-import fastify from 'fastify'
-import { db } from './database.js'
-import { env } from './env.js'
-
-const app = fastify()
-
-app.get('/', async (_request, reply) => {
-  const data = await db.query('SELECT $1::text as message', ['hello world'])
-
-  return reply.send(data)
-})
+import { app } from './app.ts'
+import { env } from './env.ts'
 
 app.listen({ port: env.PORT, host: '0.0.0.0' }, (error) => {
   if (error) {
+    // TODO: Utilizar o console.log apenas em desenvolvimento
     console.log(error)
     process.exit(1)
   }
