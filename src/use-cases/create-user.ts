@@ -2,7 +2,7 @@ import { randomUUID } from 'node:crypto'
 import bcrypt from 'bcryptjs'
 import type { UsersRepository } from '../repositories/users-repository.ts'
 import type { CreateUserForm } from '../schemas/create-user-schema.ts'
-import { UserAlreadyExists } from './errors/user-already-exists.ts'
+import { UserAlreadyExistsError } from './errors/user-already-exists-error.ts'
 
 export function CreateUserUseCase(usersRepository: UsersRepository) {
   async function execute(user: CreateUserForm) {
@@ -10,7 +10,7 @@ export function CreateUserUseCase(usersRepository: UsersRepository) {
     const isEmailUsed = await usersRepository.isEmailInUse(email)
 
     if (isEmailUsed) {
-      throw new UserAlreadyExists()
+      throw new UserAlreadyExistsError()
     }
 
     const password_hash = await bcrypt.hash(password, 6)
