@@ -13,7 +13,7 @@ export function CreateUser(
 ): CreateUserResponse {
   async function execute(user: CreateUserForm) {
     const { firstName, lastName, email, password } = user
-    const isEmailUsed = await usersRepository.isEmailInUse(email)
+    const isEmailUsed = !!(await usersRepository.findByEmail(email))
 
     if (isEmailUsed) {
       throw new UserAlreadyExistsError()

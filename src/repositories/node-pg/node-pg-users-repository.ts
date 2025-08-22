@@ -16,14 +16,14 @@ export function NodePgUsersRepository(): UsersRepository {
     return { email, id }
   }
 
-  async function isEmailInUse(email: string): Promise<boolean> {
+  async function findByEmail(email: string) {
     const response = await db.query(
       'SELECT email FROM users WHERE email = $1',
       [email]
     )
 
-    return response.length > 0
+    return response.length > 0 ? response[0] : null
   }
 
-  return { createUser, isEmailInUse }
+  return { createUser, findByEmail }
 }

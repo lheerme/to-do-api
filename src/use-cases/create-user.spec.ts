@@ -24,9 +24,9 @@ describe('Create user use case', () => {
       password: 'ihatetoby',
     })
 
-    const isEmailUsed = await usersRepository.isEmailInUse(
+    const isEmailUsed = !!(await usersRepository.findByEmail(
       'ilovepaper@email.com'
-    )
+    ))
 
     expect(isEmailUsed).toBe(true)
   })
