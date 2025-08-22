@@ -1,10 +1,12 @@
 import fastify from 'fastify'
 import z, { ZodError } from 'zod'
+import { authenticateUser } from './controllers/authenticate-user.ts'
 import { createUser } from './controllers/create-user.ts'
 
 export const app = fastify()
 
 app.post('/users', createUser)
+app.post('/sessions', authenticateUser)
 
 app.setErrorHandler((error, _request, reply) => {
   if (error instanceof ZodError) {
