@@ -4,7 +4,13 @@ import type { UsersRepository } from '../repositories/users-repository.ts'
 import type { CreateUserForm } from '../schemas/create-user-schema.ts'
 import { UserAlreadyExistsError } from './errors/user-already-exists-error.ts'
 
-export function CreateUserUseCase(usersRepository: UsersRepository) {
+export interface CreateUserUseCaseResponse {
+  execute: (user: CreateUserForm) => void
+}
+
+export function CreateUserUseCase(
+  usersRepository: UsersRepository
+): CreateUserUseCaseResponse {
   async function execute(user: CreateUserForm) {
     const { firstName, lastName, email, password } = user
     const isEmailUsed = await usersRepository.isEmailInUse(email)
