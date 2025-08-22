@@ -5,7 +5,7 @@ import type { CreateUserForm } from '../schemas/create-user-schema.ts'
 import { UserAlreadyExistsError } from './errors/user-already-exists-error.ts'
 
 export interface CreateUserUseCaseResponse {
-  execute: (user: CreateUserForm) => void
+  execute: (user: CreateUserForm) => Promise<void>
 }
 
 export function CreateUserUseCase(
