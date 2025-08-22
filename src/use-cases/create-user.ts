@@ -19,6 +19,7 @@ export function CreateUser(
       throw new UserAlreadyExistsError()
     }
 
+    const created_at = new Date()
     const password_hash = await bcrypt.hash(password, 6)
     const id = randomUUID()
 
@@ -28,6 +29,7 @@ export function CreateUser(
       lastName,
       email,
       password_hash,
+      created_at,
     })
   }
 
