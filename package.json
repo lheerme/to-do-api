@@ -6,7 +6,10 @@
   "scripts": {
     "dev": "tsx watch ./src/server.ts",
     "migrate:create": "node-pg-migrate -j ts -m ./src/migrations create",
-    "migrate:up": "node-pg-migrate --tsx -m ./src/migrations up"
+    "migrate:up": "node-pg-migrate --tsx -m ./src/migrations up",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage"
   },
   "keywords": [],
   "author": "",
@@ -16,11 +19,13 @@
     "@biomejs/biome": "^2.2.0",
     "@types/node": "^24.3.0",
     "@types/pg": "^8.15.5",
+    "@vitest/coverage-v8": "^3.2.4",
     "dotenv": "^17.2.1",
     "node-pg-migrate": "^8.0.3",
     "tsx": "^4.20.4",
     "typescript": "^5.9.2",
-    "ultracite": "^5.2.3"
+    "ultracite": "^5.2.3",
+    "vitest": "^3.2.4"
   },
   "dependencies": {
     "bcryptjs": "^3.0.2",
