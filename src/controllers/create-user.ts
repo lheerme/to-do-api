@@ -1,7 +1,7 @@
 import type { FastifyReply, FastifyRequest } from 'fastify'
 import { NodePgUsersRepository } from '../repositories/node-pg/node-pg-users-repository.ts'
 import { createUserSchema } from '../schemas/create-user-schema.ts'
-import { CreateUserUseCase } from '../use-cases/create-user.ts'
+import { CreateUser } from '../use-cases/create-user.ts'
 import { UserAlreadyExistsError } from '../use-cases/errors/user-already-exists-error.ts'
 
 export async function createUser(request: FastifyRequest, reply: FastifyReply) {
@@ -9,7 +9,7 @@ export async function createUser(request: FastifyRequest, reply: FastifyReply) {
 
   try {
     const usersRepository = NodePgUsersRepository()
-    const createUserUseCase = CreateUserUseCase(usersRepository)
+    const createUserUseCase = CreateUser(usersRepository)
 
     await createUserUseCase.execute(data)
   } catch (error) {

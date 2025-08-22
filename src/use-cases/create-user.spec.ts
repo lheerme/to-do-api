@@ -4,19 +4,16 @@ import {
   InMemoryUsersRepository,
   type InMemoryUsersRepositoryResponse,
 } from '../repositories/in-memory/in-memory-users-repository.ts'
-import {
-  CreateUserUseCase,
-  type CreateUserUseCaseResponse,
-} from './create-user.ts'
+import { CreateUser, type CreateUserResponse } from './create-user.ts'
 import { UserAlreadyExistsError } from './errors/user-already-exists-error.ts'
 
 let usersRepository: InMemoryUsersRepositoryResponse
-let createUser: CreateUserUseCaseResponse
+let createUser: CreateUserResponse
 
 describe('Create user use case', () => {
   beforeEach(() => {
     usersRepository = InMemoryUsersRepository()
-    createUser = CreateUserUseCase(usersRepository)
+    createUser = CreateUser(usersRepository)
   })
 
   it('should be abre do create users', async () => {
