@@ -8,16 +8,16 @@ import { CreateUser, type CreateUserResponse } from './create-user.ts'
 import { UserAlreadyExistsError } from './errors/user-already-exists-error.ts'
 
 let usersRepository: InMemoryUsersRepositoryResponse
-let createUser: CreateUserResponse
+let sut: CreateUserResponse
 
 describe('Create user use case', () => {
   beforeEach(() => {
     usersRepository = InMemoryUsersRepository()
-    createUser = CreateUser(usersRepository)
+    sut = CreateUser(usersRepository)
   })
 
   it('should be abre do create users', async () => {
-    await createUser.execute({
+    await sut.execute({
       firstName: 'Michael',
       lastName: 'Scott',
       email: 'ilovepaper@email.com',
@@ -32,7 +32,7 @@ describe('Create user use case', () => {
   })
 
   it('should hash user password upon creation', async () => {
-    await createUser.execute({
+    await sut.execute({
       firstName: 'Michael',
       lastName: 'Scott',
       email: 'ilovepaper@email.com',
@@ -51,7 +51,7 @@ describe('Create user use case', () => {
   it('should not be able to create user with same e-mail twice', async () => {
     const email = 'ilovepaper@email.com'
 
-    await createUser.execute({
+    await sut.execute({
       firstName: 'Michael',
       lastName: 'Scott',
       email,
@@ -59,7 +59,7 @@ describe('Create user use case', () => {
     })
 
     await expect(async () => {
-      await createUser.execute({
+      await sut.execute({
         firstName: 'Dwight',
         lastName: 'Schrute',
         email,
