@@ -6,10 +6,10 @@ export function NodePgUsersRepository(): UsersRepository {
   async function createUser(
     data: User
   ): Promise<{ email: string; id: string }> {
-    const { id, firstName, lastName, email, password_hash } = data
+    const { id, first_name, last_name, email, password_hash } = data
 
     const query = 'INSERT INTO users VALUES ($1, $2, $3, $4, $5)'
-    const values = [id, firstName, lastName, email, password_hash]
+    const values = [id, first_name, last_name, email, password_hash]
 
     await db.query(query, values)
 

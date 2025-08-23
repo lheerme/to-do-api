@@ -25,8 +25,8 @@ export function CreateUser(
 
     await usersRepository.createUser({
       id,
-      firstName,
-      lastName,
+      first_name: firstName,
+      last_name: lastName,
       email,
       password_hash,
       created_at,
