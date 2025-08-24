@@ -17,10 +17,9 @@ export function NodePgUsersRepository(): UsersRepository {
   }
 
   async function findByEmail(email: string) {
-    const response = await db.query(
-      'SELECT email FROM users WHERE email = $1',
-      [email]
-    )
+    const response = await db.query('SELECT * FROM users WHERE email = $1', [
+      email,
+    ])
 
     return response.length > 0 ? response[0] : null
   }
