@@ -30,8 +30,8 @@ describe('Authenticate user use case', () => {
 
     await usersRepository.createUser({
       id,
-      firstName: 'Michael',
-      lastName: 'Scott',
+      first_name: 'Michael',
+      last_name: 'Scott',
       email,
       password_hash,
       created_at,
@@ -67,12 +67,14 @@ describe('Authenticate user use case', () => {
 
     await usersRepository.createUser({
       id,
-      firstName: 'Michael',
-      lastName: 'Scott',
+      first_name: 'Michael',
+      last_name: 'Scott',
       email,
       password_hash,
       created_at,
     })
+
+    console.log(usersRepository.users)
 
     await expect(async () => {
       await sut.execute({
