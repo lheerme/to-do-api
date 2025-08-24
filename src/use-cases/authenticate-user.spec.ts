@@ -74,8 +74,6 @@ describe('Authenticate user use case', () => {
       created_at,
     })
 
-    console.log(usersRepository.users)
-
     await expect(async () => {
       await sut.execute({
         email,
