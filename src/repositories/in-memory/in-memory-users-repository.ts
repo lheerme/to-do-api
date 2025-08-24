@@ -23,5 +23,10 @@ export function InMemoryUsersRepository(): InMemoryUsersRepositoryResponse {
     return response ? response : null
   }
 
-  return { createUser, findByEmail, users }
+  async function findById(id: string) {
+    const response = await users.find((user) => user.id === id)
+    return response ? response : null
+  }
+
+  return { createUser, findByEmail, findById, users }
 }

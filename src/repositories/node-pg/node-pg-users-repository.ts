@@ -25,5 +25,11 @@ export function NodePgUsersRepository(): UsersRepository {
     return response.length > 0 ? response[0] : null
   }
 
-  return { createUser, findByEmail }
+  async function findById(id: string) {
+    const response = await db.query('SELECT * FROM users WHERE id = $1', [id])
+
+    return response.length > 0 ? response[0] : null
+  }
+
+  return { createUser, findByEmail, findById }
 }
