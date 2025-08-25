@@ -1,18 +1,24 @@
 import { randomUUID } from 'node:crypto'
 import bcrypt from 'bcryptjs'
+import type { User } from '../interfaces/user.ts'
 import type { UsersRepository } from '../repositories/users-repository.ts'
 import type { CreateUserForm } from '../schemas/create-user-schema.ts'
 import { UserAlreadyExistsError } from './errors/user-already-exists-error.ts'
 
+export interface CreateUserRequest extends CreateUserForm {}
 export interface CreateUserResponse {
-  execute: (user: CreateUserForm) => Promise<void>
+  user: User
 }
 
-export function CreateUser(
-  usersRepository: UsersRepository
-): CreateUserResponse {
-  async function execute(user: CreateUserForm) {
-    const { firstName, lastName, email, password } = user
+export interface CreateUserReturn {
+  execute: (user: CreateUserForm) => Promise<CreateUserResponse>
+}
+
+export function CreateUser(usersRepository: UsersRepository): CreateUserReturn {
+  async function execute(
+    userData: CreateUserForm
+  ): Promise<CreateUserResponse> {
+    const { firstName, lastName, email, password } = userData
     const isEmailUsed = !!(await usersRepository.findByEmail(email))
 
     if (isEmailUsed) {
@@ -23,7 +29,7 @@ export function CreateUser(
     const password_hash = await bcrypt.hash(password, 6)
     const id = randomUUID()
 
-    await usersRepository.createUser({
+    const user = await usersRepository.createUser({
       id,
       first_name: firstName,
       last_name: lastName,
@@ -31,6 +37,8 @@ export function CreateUser(
       password_hash,
       created_at,
     })
+
+    return { user }
   }
 
   return { execute }

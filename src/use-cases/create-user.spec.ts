@@ -4,11 +4,11 @@ import {
   InMemoryUsersRepository,
   type InMemoryUsersRepositoryResponse,
 } from '../repositories/in-memory/in-memory-users-repository.ts'
-import { CreateUser, type CreateUserResponse } from './create-user.ts'
+import { CreateUser, type CreateUserReturn } from './create-user.ts'
 import { UserAlreadyExistsError } from './errors/user-already-exists-error.ts'
 
 let usersRepository: InMemoryUsersRepositoryResponse
-let sut: CreateUserResponse
+let sut: CreateUserReturn
 
 describe('Create user use case', () => {
   beforeEach(() => {
@@ -17,32 +17,27 @@ describe('Create user use case', () => {
   })
 
   it('should be abre do create users', async () => {
-    await sut.execute({
+    const { user } = await sut.execute({
       firstName: 'Michael',
       lastName: 'Scott',
       email: 'ilovepaper@email.com',
       password: 'ihatetoby',
     })
 
-    const isEmailUsed = !!(await usersRepository.findByEmail(
-      'ilovepaper@email.com'
-    ))
-
-    expect(isEmailUsed).toBe(true)
+    expect(user.id).toEqual(expect.any(String))
   })
 
   it('should hash user password upon creation', async () => {
-    await sut.execute({
+    const { user } = await sut.execute({
       firstName: 'Michael',
       lastName: 'Scott',
       email: 'ilovepaper@email.com',
       password: 'ihatetoby',
     })
 
-    const createdUserPasswordHash = usersRepository.users[0].password_hash
     const isPasswordCorrectlyHashed = bcrypt.compareSync(
       'ihatetoby',
-      createdUserPasswordHash
+      user.password_hash
     )
 
     expect(isPasswordCorrectlyHashed).toBe(true)

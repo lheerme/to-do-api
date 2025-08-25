@@ -6,7 +6,10 @@ const pool = new Pool({
 })
 
 export const db = {
-  query: async (query: string, params?: (string | number)[]) => {
+  query: async <T>(
+    query: string,
+    params?: (string | number)[]
+  ): Promise<T[]> => {
     const client = await pool.connect()
 
     try {

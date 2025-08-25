@@ -8,14 +8,10 @@ export interface InMemoryUsersRepositoryResponse extends UsersRepository {
 export function InMemoryUsersRepository(): InMemoryUsersRepositoryResponse {
   const users: User[] = []
 
-  async function createUser(
-    data: User
-  ): Promise<{ email: string; id: string }> {
+  async function createUser(data: User) {
     await users.push(data)
 
-    const { email, id } = data
-
-    return { email, id }
+    return data
   }
 
   async function findByEmail(email: string) {
