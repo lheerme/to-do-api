@@ -26,7 +26,7 @@ describe('Create todo use case', () => {
     expect(todo.id).toEqual(expect.any(String))
   })
 
-  it('should not be able to create a todo with same name twice', async () => {
+  it('should not be able to create a todo with same name twice for the same user', async () => {
     const title = 'Fire toby'
     const user_id = randomUUID()
 
@@ -41,5 +41,21 @@ describe('Create todo use case', () => {
         user_id,
       })
     }).rejects.toBeInstanceOf(TodoAlreadyExistsError)
+  })
+
+  it('should be able to create a todo with same name for different users.', async () => {
+    const title = 'Fire toby'
+
+    const { todo: todo1 } = await sut.execute({
+      title,
+      user_id: randomUUID(),
+    })
+
+    const { todo: todo2 } = await sut.execute({
+      title,
+      user_id: randomUUID(),
+    })
+
+    expect(todo1.title).toBe(todo2.title)
   })
 })
