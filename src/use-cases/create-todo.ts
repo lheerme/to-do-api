@@ -14,12 +14,12 @@ export interface CreateTodoReturn {
   execute: (todoData: CreateTodoRequest) => Promise<CreateTodoResponse>
 }
 
-export function CreateTodo(todoRepository: TodosRepository): CreateTodoReturn {
+export function CreateTodo(todosRepository: TodosRepository): CreateTodoReturn {
   async function execute(
     todoData: CreateTodoRequest
   ): Promise<CreateTodoResponse> {
     const { title, user_id } = todoData
-    const isTitleUsed = await todoRepository.findByTitle(title, user_id)
+    const isTitleUsed = await todosRepository.findByTitle(title, user_id)
 
     if (isTitleUsed) {
       throw new TodoAlreadyExistsError()
@@ -28,7 +28,7 @@ export function CreateTodo(todoRepository: TodosRepository): CreateTodoReturn {
     const id = randomUUID()
     const created_at = new Date()
 
-    const todo = await todoRepository.createTodo({
+    const todo = await todosRepository.createTodo({
       id,
       title,
       created_at,
