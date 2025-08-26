@@ -19,5 +19,12 @@ export function InMemoryTodosRepository(): InMemoryTodosRepositoryReturn {
     return response ? response : null
   }
 
-  return { createTodo, findByTitle }
+  async function findByUserId(userId: string, page: number) {
+    const response = await todos.filter((todo) => todo.user_id === userId)
+    const paginatedResponse = response.slice((page - 1) * 20, page * 20)
+
+    return paginatedResponse
+  }
+
+  return { createTodo, findByTitle, findByUserId }
 }
