@@ -26,5 +26,19 @@ export function InMemoryTodosRepository(): InMemoryTodosRepositoryReturn {
     return paginatedResponse
   }
 
-  return { createTodo, findByTitle, findByUserId }
+  async function findById(id: string) {
+    const response = await todos.find((todo) => todo.id === id)
+
+    return response ? response : null
+  }
+
+  async function editTodoTitle({ id, title }: { title: string; id: string }) {
+    const todoIndex = await todos.findIndex((todo) => todo.id === id)
+    todos[todoIndex].title = title
+    const response = await todos.find((todo) => todo.id === id)
+
+    return response!
+  }
+
+  return { createTodo, editTodoTitle, findByTitle, findByUserId, findById }
 }
