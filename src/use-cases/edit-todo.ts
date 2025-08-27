@@ -21,8 +21,10 @@ export function EditTodo(todosRepository: TodosRepository): EditTodoReturn {
     const { id, title, user_id } = data
 
     const doesTodoExists = !!(await todosRepository.findById(id))
-    // TODO: vai quebrar quando o findByTitle mudar
-    const isTitleUsed = !!(await todosRepository.findByTitle(title, user_id))
+    const isTitleUsed = !!(await todosRepository.findByTitleAndUserId({
+      title,
+      userId: user_id,
+    }))
 
     if (!doesTodoExists) {
       throw new ResourceNotFoundError()

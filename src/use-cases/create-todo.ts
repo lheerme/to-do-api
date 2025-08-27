@@ -19,7 +19,10 @@ export function CreateTodo(todosRepository: TodosRepository): CreateTodoReturn {
     todoData: CreateTodoRequest
   ): Promise<CreateTodoResponse> {
     const { title, user_id } = todoData
-    const isTitleUsed = await todosRepository.findByTitle(title, user_id)
+    const isTitleUsed = await todosRepository.findByTitleAndUserId({
+      title,
+      userId: user_id,
+    })
 
     if (isTitleUsed) {
       throw new TodoAlreadyExistsError()

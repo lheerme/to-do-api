@@ -12,7 +12,13 @@ export function InMemoryTodosRepository(): InMemoryTodosRepositoryReturn {
     return data
   }
 
-  async function findByTitle(title: string, userId: string) {
+  async function findByTitleAndUserId({
+    title,
+    userId,
+  }: {
+    title: string
+    userId: string
+  }) {
     const response = await todos.find(
       (todo) => todo.title === title && todo.user_id === userId
     )
@@ -37,8 +43,15 @@ export function InMemoryTodosRepository(): InMemoryTodosRepositoryReturn {
     todos[todoIndex].title = title
     const response = await todos.find((todo) => todo.id === id)
 
+    // biome-ignore lint/style/noNonNullAssertion: <explanation>
     return response!
   }
 
-  return { createTodo, editTodoTitle, findByTitle, findByUserId, findById }
+  return {
+    createTodo,
+    editTodoTitle,
+    findByTitleAndUserId,
+    findByUserId,
+    findById,
+  }
 }
