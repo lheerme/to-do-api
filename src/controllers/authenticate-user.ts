@@ -17,5 +17,7 @@ export async function authenticateUser(
     if (error instanceof InvalidCredentialsError) {
       return reply.status(error.statusCode).send({ message: error.message })
     }
+
+    throw error
   }
 }
