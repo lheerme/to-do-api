@@ -1,4 +1,4 @@
-import { db } from '../../database.ts'
+import { db } from '../../database/connection.ts'
 import type { User } from '../../interfaces/user.ts'
 import type { UsersRepository } from '../users-repository.ts'
 
