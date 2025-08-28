@@ -9,4 +9,5 @@ export interface TodosRepository {
   }) => Promise<Todo | null>
   findByUserId: (userId: string, page: number) => Promise<Todo[]>
   findById: (id: string) => Promise<Todo | null>
+  deleteById: (id: string) => Promise<Todo>
 }

@@ -47,11 +47,19 @@ export function InMemoryTodosRepository(): InMemoryTodosRepositoryReturn {
     return response!
   }
 
+  async function deleteById(id: string) {
+    const todoIndex = await todos.findIndex((todo) => todo.id === id)
+    const deletedTodo = await todos.splice(todoIndex, 1)
+
+    return deletedTodo[0]
+  }
+
   return {
     createTodo,
     editTodoTitle,
     findByTitleAndUserId,
     findByUserId,
     findById,
+    deleteById,
   }
 }
