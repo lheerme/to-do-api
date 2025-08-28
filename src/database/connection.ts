@@ -19,11 +19,11 @@ export const db = {
 
       return resp.rows
     } catch (error) {
-      if (error instanceof AggregateError) {
-        const errorCode = error.errors[0].code
+      if (error instanceof Error) {
+        const errorMessage = error.message
 
-        if (errorCode === 'ECONNREFUSED') {
-          throw new DatabaseOperationError(error.errors)
+        if (errorMessage.includes('ECONNREFUSED')) {
+          throw new DatabaseOperationError([])
         }
       }
 
