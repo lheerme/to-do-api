@@ -1,8 +1,8 @@
 import { db } from '../../database/connection.ts'
 import type { User } from '../../interfaces/user.ts'
-import type { UsersRepository } from '../users-repository.ts'
+import type { UserRepository } from '../user-repository.ts'
 
-export function NodePgUsersRepository(): UsersRepository {
+export function NodePgUserRepository(): UserRepository {
   async function createUser(data: User): Promise<User> {
     const { id, first_name, last_name, email, password_hash } = data
 

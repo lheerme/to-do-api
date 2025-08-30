@@ -1,11 +1,11 @@
 import type { User } from '../../interfaces/user.ts'
-import type { UsersRepository } from '../users-repository.ts'
+import type { UserRepository } from '../user-repository.ts'
 
-export interface InMemoryUsersRepositoryResponse extends UsersRepository {
+export interface InMemoryUserRepositoryResponse extends UserRepository {
   users: User[]
 }
 
-export function InMemoryUsersRepository(): InMemoryUsersRepositoryResponse {
+export function InMemoryUserRepository(): InMemoryUserRepositoryResponse {
   const users: User[] = []
 
   async function createUser(data: User) {

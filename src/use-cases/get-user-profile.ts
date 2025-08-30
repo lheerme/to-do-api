@@ -1,5 +1,5 @@
 import type { User } from '../interfaces/user.ts'
-import type { UsersRepository } from '../repositories/users-repository.ts'
+import type { UserRepository } from '../repositories/user-repository.ts'
 import { ResourceNotFoundError } from './errors/resource-not-found-error.ts'
 
 export interface GetUserProfileRequest {
@@ -13,12 +13,12 @@ export interface GetUserProfileReturn {
 }
 
 export function GetUserProfile(
-  usersRepository: UsersRepository
+  userRepository: UserRepository
 ): GetUserProfileReturn {
   async function execute({
     id,
   }: GetUserProfileRequest): Promise<GetUserProfileResponse> {
-    const user = await usersRepository.findById(id)
+    const user = await userRepository.findById(id)
 
     if (!user) {
       throw new ResourceNotFoundError()

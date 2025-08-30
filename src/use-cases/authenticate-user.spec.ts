@@ -2,22 +2,22 @@ import { randomUUID } from 'node:crypto'
 import bcrypt from 'bcryptjs'
 import { beforeEach, describe, expect, it } from 'vitest'
 import {
-  InMemoryUsersRepository,
-  type InMemoryUsersRepositoryResponse,
-} from '../repositories/in-memory/in-memory-users-repository.ts'
+  InMemoryUserRepository,
+  type InMemoryUserRepositoryResponse,
+} from '../repositories/in-memory/in-memory-user-repository.ts'
 import {
   AuthenticateUser,
   type AuthenticateUserReturn,
 } from './authenticate-user.ts'
 import { InvalidCredentialsError } from './errors/invalid-credentials-error.ts'
 
-let usersRepository: InMemoryUsersRepositoryResponse
+let userRepository: InMemoryUserRepositoryResponse
 let sut: AuthenticateUserReturn
 
 describe('Authenticate user use case', () => {
   beforeEach(() => {
-    usersRepository = InMemoryUsersRepository()
-    sut = AuthenticateUser(usersRepository)
+    userRepository = InMemoryUserRepository()
+    sut = AuthenticateUser(userRepository)
   })
 
   it('should be able to authenticate', async () => {
@@ -28,7 +28,7 @@ describe('Authenticate user use case', () => {
     const password_hash = bcrypt.hashSync(password, 6)
     const id = randomUUID()
 
-    await usersRepository.createUser({
+    await userRepository.createUser({
       id,
       first_name: 'Michael',
       last_name: 'Scott',
@@ -65,7 +65,7 @@ describe('Authenticate user use case', () => {
     const password_hash = bcrypt.hashSync(password, 6)
     const id = randomUUID()
 
-    await usersRepository.createUser({
+    await userRepository.createUser({
       id,
       first_name: 'Michael',
       last_name: 'Scott',

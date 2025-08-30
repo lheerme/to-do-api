@@ -1,19 +1,19 @@
 import bcrypt from 'bcryptjs'
 import { beforeEach, describe, expect, it } from 'vitest'
 import {
-  InMemoryUsersRepository,
-  type InMemoryUsersRepositoryResponse,
-} from '../repositories/in-memory/in-memory-users-repository.ts'
+  InMemoryUserRepository,
+  type InMemoryUserRepositoryResponse,
+} from '../repositories/in-memory/in-memory-user-repository.ts'
 import { CreateUser, type CreateUserReturn } from './create-user.ts'
 import { UserAlreadyExistsError } from './errors/user-already-exists-error.ts'
 
-let usersRepository: InMemoryUsersRepositoryResponse
+let userRepository: InMemoryUserRepositoryResponse
 let sut: CreateUserReturn
 
 describe('Create user use case', () => {
   beforeEach(() => {
-    usersRepository = InMemoryUsersRepository()
-    sut = CreateUser(usersRepository)
+    userRepository = InMemoryUserRepository()
+    sut = CreateUser(userRepository)
   })
 
   it('should be abre do create users', async () => {

@@ -1,6 +1,6 @@
 import bcrypt from 'bcryptjs'
 import type { User } from '../interfaces/user.ts'
-import type { UsersRepository } from '../repositories/users-repository.ts'
+import type { UserRepository } from '../repositories/user-repository.ts'
 import { InvalidCredentialsError } from './errors/invalid-credentials-error.ts'
 
 export interface AuthenticateUserRequest {
@@ -17,13 +17,13 @@ export interface AuthenticateUserReturn {
 }
 
 export function AuthenticateUser(
-  usersRepository: UsersRepository
+  userRepository: UserRepository
 ): AuthenticateUserReturn {
   async function execute({
     email,
     password,
   }: AuthenticateUserRequest): Promise<AuthenticateUserResponse> {
-    const user = await usersRepository.findByEmail(email)
+    const user = await userRepository.findByEmail(email)
 
     if (!user) {
       throw new InvalidCredentialsError()

@@ -1,9 +1,9 @@
-import { NodePgUsersRepository } from '../../repositories/node-pg/node-pg-users-repository.ts'
+import { NodePgUserRepository } from '../../repositories/node-pg/node-pg-user-repository.ts'
 import { AuthenticateUser } from '../authenticate-user.ts'
 
 export function MakeAuthenticateUserUseCase() {
-  const usersRepository = NodePgUsersRepository()
-  const authenticateUserUseCase = AuthenticateUser(usersRepository)
+  const userRepository = NodePgUserRepository()
+  const authenticateUserUseCase = AuthenticateUser(userRepository)
 
   return authenticateUserUseCase
 }
