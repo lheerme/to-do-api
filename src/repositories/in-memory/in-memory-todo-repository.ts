@@ -1,9 +1,9 @@
 import type { Todo } from '../../interfaces/todo.ts'
-import type { TodosRepository } from '../todos-repository.ts'
+import type { TodoRepository } from '../todo-repository.ts'
 
-export interface InMemoryTodosRepositoryReturn extends TodosRepository {}
+export interface InMemoryTodoRepositoryReturn extends TodoRepository {}
 
-export function InMemoryTodosRepository(): InMemoryTodosRepositoryReturn {
+export function InMemoryTodoRepository(): InMemoryTodoRepositoryReturn {
   const todos: Todo[] = []
 
   async function createTodo(data: Todo) {

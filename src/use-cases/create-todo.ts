@@ -1,6 +1,6 @@
 import { randomUUID } from 'node:crypto'
 import type { Todo } from '../interfaces/todo.ts'
-import type { TodosRepository } from '../repositories/todos-repository.ts'
+import type { TodoRepository } from '../repositories/todo-repository.ts'
 import type { CreateTodoForm } from '../schemas/create-todo-schema.ts'
 import { TodoAlreadyExistsError } from './errors/todo-already-exists-error.ts'
 
@@ -14,12 +14,12 @@ export interface CreateTodoReturn {
   execute: (todoData: CreateTodoRequest) => Promise<CreateTodoResponse>
 }
 
-export function CreateTodo(todosRepository: TodosRepository): CreateTodoReturn {
+export function CreateTodo(todoRepository: TodoRepository): CreateTodoReturn {
   async function execute(
     todoData: CreateTodoRequest
   ): Promise<CreateTodoResponse> {
     const { title, user_id } = todoData
-    const isTitleUsed = await todosRepository.findByTitleAndUserId({
+    const isTitleUsed = await todoRepository.findByTitleAndUserId({
       title,
       userId: user_id,
     })
@@ -31,7 +31,7 @@ export function CreateTodo(todosRepository: TodosRepository): CreateTodoReturn {
     const id = randomUUID()
     const created_at = new Date()
 
-    const todo = await todosRepository.createTodo({
+    const todo = await todoRepository.createTodo({
       id,
       title,
       created_at,

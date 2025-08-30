@@ -1,11 +1,11 @@
 import { beforeEach, describe, expect, it } from 'vitest'
-import { InMemoryTodosRepository } from '../repositories/in-memory/in-memory-todos-repository.ts'
-import type { TodosRepository } from '../repositories/todos-repository.ts'
+import { InMemoryTodoRepository } from '../repositories/in-memory/in-memory-todo-repository.ts'
+import type { TodoRepository } from '../repositories/todo-repository.ts'
 import { EditTodo, type EditTodoReturn } from './edit-todo.ts'
 import { ResourceNotFoundError } from './errors/resource-not-found-error.ts'
 import { TodoAlreadyExistsError } from './errors/todo-already-exists-error.ts'
 
-let todosRepository: TodosRepository
+let todoRepository: TodoRepository
 let sut: EditTodoReturn
 const todoId = 'todo-01'
 const userId = 'user-01'
@@ -14,10 +14,10 @@ const currentTitle = 'current-title'
 
 describe('edit todo use case', () => {
   beforeEach(async () => {
-    todosRepository = InMemoryTodosRepository()
-    sut = EditTodo(todosRepository)
+    todoRepository = InMemoryTodoRepository()
+    sut = EditTodo(todoRepository)
 
-    await todosRepository.createTodo({
+    await todoRepository.createTodo({
       id: todoId,
       created_at: new Date(),
       title: currentTitle,

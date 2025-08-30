@@ -1,5 +1,5 @@
 import type { Todo } from '../interfaces/todo.ts'
-import type { TodosRepository } from '../repositories/todos-repository.ts'
+import type { TodoRepository } from '../repositories/todo-repository.ts'
 import { ResourceNotFoundError } from './errors/resource-not-found-error.ts'
 
 export interface DeleteTodoRequest {
@@ -13,15 +13,15 @@ export interface DeleteTodoReturn {
   execute: (data: DeleteTodoRequest) => Promise<DeleteTodoResponse>
 }
 
-export function DeleteTodo(todosRepository: TodosRepository): DeleteTodoReturn {
+export function DeleteTodo(todoRepository: TodoRepository): DeleteTodoReturn {
   async function execute({ id }: DeleteTodoRequest) {
-    const doesTodoExists = !!(await todosRepository.findById(id))
+    const doesTodoExists = !!(await todoRepository.findById(id))
 
     if (!doesTodoExists) {
       throw new ResourceNotFoundError()
     }
 
-    const todo = await todosRepository.deleteById(id)
+    const todo = await todoRepository.deleteById(id)
 
     return { todo }
   }

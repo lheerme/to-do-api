@@ -1,20 +1,20 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 import {
-  InMemoryTodosRepository,
-  type InMemoryTodosRepositoryReturn,
-} from '../repositories/in-memory/in-memory-todos-repository.ts'
+  InMemoryTodoRepository,
+  type InMemoryTodoRepositoryReturn,
+} from '../repositories/in-memory/in-memory-todo-repository.ts'
 import {
   GetUserTodoList,
   type GetUserTodoListReturn,
 } from './get-user-todo-list.ts'
 
-let todosRepository: InMemoryTodosRepositoryReturn
+let todoRepository: InMemoryTodoRepositoryReturn
 let sut: GetUserTodoListReturn
 
 describe('get user todo use case', () => {
   beforeEach(() => {
-    todosRepository = InMemoryTodosRepository()
-    sut = GetUserTodoList(todosRepository)
+    todoRepository = InMemoryTodoRepository()
+    sut = GetUserTodoList(todoRepository)
   })
 
   it('should be able to get user todos', async () => {
@@ -22,7 +22,7 @@ describe('get user todo use case', () => {
     const totalTodos = 3
 
     for (let i = 0; i < totalTodos; i++) {
-      await todosRepository.createTodo({
+      await todoRepository.createTodo({
         id: `todo-${i}`,
         title: `todo-${i}`,
         created_at: new Date(),
@@ -32,7 +32,7 @@ describe('get user todo use case', () => {
       })
     }
 
-    await todosRepository.createTodo({
+    await todoRepository.createTodo({
       id: 'todo-01',
       title: 'todo-01',
       created_at: new Date(),
@@ -53,7 +53,7 @@ describe('get user todo use case', () => {
     const userId = 'user-01'
 
     for (let i = 0; i < 22; i++) {
-      await todosRepository.createTodo({
+      await todoRepository.createTodo({
         id: `todo-${i}`,
         title: `todo-${i}`,
         created_at: new Date(),

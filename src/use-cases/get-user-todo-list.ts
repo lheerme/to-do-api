@@ -1,5 +1,5 @@
 import type { Todo } from '../interfaces/todo.ts'
-import type { TodosRepository } from '../repositories/todos-repository.ts'
+import type { TodoRepository } from '../repositories/todo-repository.ts'
 
 export interface GetUserTodoListRequest {
   userId: string
@@ -15,10 +15,10 @@ export interface GetUserTodoListReturn {
 }
 
 export function GetUserTodoList(
-  todosRepository: TodosRepository
+  todoRepository: TodoRepository
 ): GetUserTodoListReturn {
   async function execute({ userId, page }: GetUserTodoListRequest) {
-    const todos = await todosRepository.findByUserId(userId, page)
+    const todos = await todoRepository.findByUserId(userId, page)
 
     return { todos }
   }

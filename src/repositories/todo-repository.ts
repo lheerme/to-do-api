@@ -1,6 +1,6 @@
 import type { Todo } from '../interfaces/todo.ts'
 
-export interface TodosRepository {
+export interface TodoRepository {
   createTodo: (data: Todo) => Promise<Todo>
   editTodoTitle: (data: { title: string; id: string }) => Promise<Todo>
   findByTitleAndUserId: (data: {

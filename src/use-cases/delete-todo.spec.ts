@@ -1,18 +1,18 @@
 import { beforeEach, describe, expect, it } from 'vitest'
-import { InMemoryTodosRepository } from '../repositories/in-memory/in-memory-todos-repository.ts'
-import type { TodosRepository } from '../repositories/todos-repository.ts'
+import { InMemoryTodoRepository } from '../repositories/in-memory/in-memory-todo-repository.ts'
+import type { TodoRepository } from '../repositories/todo-repository.ts'
 import { DeleteTodo, type DeleteTodoReturn } from './delete-todo.ts'
 import { ResourceNotFoundError } from './errors/resource-not-found-error.ts'
 
-let todosRepository: TodosRepository
+let todoRepository: TodoRepository
 let sut: DeleteTodoReturn
 
 describe('Delete todo use case', () => {
   beforeEach(async () => {
-    todosRepository = InMemoryTodosRepository()
-    sut = DeleteTodo(todosRepository)
+    todoRepository = InMemoryTodoRepository()
+    sut = DeleteTodo(todoRepository)
 
-    await todosRepository.createTodo({
+    await todoRepository.createTodo({
       created_at: new Date(),
       id: 'id-01',
       title: 'todo-01',
@@ -21,7 +21,7 @@ describe('Delete todo use case', () => {
       user_id: 'user-01',
     })
 
-    await todosRepository.createTodo({
+    await todoRepository.createTodo({
       created_at: new Date(),
       id: 'id-02',
       title: 'todo-02',

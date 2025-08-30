@@ -1,5 +1,5 @@
 import type { Todo } from '../interfaces/todo.ts'
-import type { TodosRepository } from '../repositories/todos-repository.ts'
+import type { TodoRepository } from '../repositories/todo-repository.ts'
 import { ResourceNotFoundError } from './errors/resource-not-found-error.ts'
 import { TodoAlreadyExistsError } from './errors/todo-already-exists-error.ts'
 
@@ -16,12 +16,12 @@ export interface EditTodoReturn {
   execute: (data: EditTodoRequest) => Promise<EditTodoResponse>
 }
 
-export function EditTodo(todosRepository: TodosRepository): EditTodoReturn {
+export function EditTodo(todoRepository: TodoRepository): EditTodoReturn {
   async function execute(data: EditTodoRequest) {
     const { id, title, user_id } = data
 
-    const doesTodoExists = !!(await todosRepository.findById(id))
-    const isTitleUsed = !!(await todosRepository.findByTitleAndUserId({
+    const doesTodoExists = !!(await todoRepository.findById(id))
+    const isTitleUsed = !!(await todoRepository.findByTitleAndUserId({
       title,
       userId: user_id,
     }))
@@ -34,7 +34,7 @@ export function EditTodo(todosRepository: TodosRepository): EditTodoReturn {
       throw new TodoAlreadyExistsError()
     }
 
-    const todo = await todosRepository.editTodoTitle({ id, title })
+    const todo = await todoRepository.editTodoTitle({ id, title })
 
     return { todo }
   }

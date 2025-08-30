@@ -1,19 +1,19 @@
 import { randomUUID } from 'node:crypto'
 import { beforeEach, describe, expect, it } from 'vitest'
 import {
-  InMemoryTodosRepository,
-  type InMemoryTodosRepositoryReturn,
-} from '../repositories/in-memory/in-memory-todos-repository.ts'
+  InMemoryTodoRepository,
+  type InMemoryTodoRepositoryReturn,
+} from '../repositories/in-memory/in-memory-todo-repository.ts'
 import { CreateTodo, type CreateTodoReturn } from './create-todo.ts'
 import { TodoAlreadyExistsError } from './errors/todo-already-exists-error.ts'
 
-let todosRepository: InMemoryTodosRepositoryReturn
+let todoRepository: InMemoryTodoRepositoryReturn
 let sut: CreateTodoReturn
 
 describe('Create todo use case', () => {
   beforeEach(() => {
-    todosRepository = InMemoryTodosRepository()
-    sut = CreateTodo(todosRepository)
+    todoRepository = InMemoryTodoRepository()
+    sut = CreateTodo(todoRepository)
   })
 
   // TODO: Validar se o user realmente existe.
