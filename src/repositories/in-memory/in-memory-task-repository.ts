@@ -33,7 +33,7 @@ export function InMemoryTaskRepository(): InMemoryTaskRepositoryReturn {
     return response ? response : null
   }
 
-  async function toggleCompletion(data: { id: string; is_completed: boolean }) {
+  async function toggleCompletion(data: Pick<Task, 'id' | 'is_completed'>) {
     const { id, is_completed } = data
     const taskIndex = await tasks.findIndex((task) => task.id === id)
     await tasks.splice(taskIndex, 1, {
@@ -44,5 +44,20 @@ export function InMemoryTaskRepository(): InMemoryTaskRepositoryReturn {
     return tasks[taskIndex]
   }
 
-  return { createTask, findByTitleAndTodoId, findById, toggleCompletion }
+  async function editTaskTitle(data: Pick<Task, 'id' | 'title'>) {
+    const { title, id } = data
+
+    const taskIndex = await tasks.findIndex((task) => task.id === id)
+    tasks.splice(taskIndex, 1, { ...tasks[taskIndex], title })
+
+    return tasks[taskIndex]
+  }
+
+  return {
+    createTask,
+    findByTitleAndTodoId,
+    findById,
+    toggleCompletion,
+    editTaskTitle,
+  }
 }
