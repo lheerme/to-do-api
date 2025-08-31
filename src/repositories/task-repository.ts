@@ -6,4 +6,9 @@ export interface TaskRepository {
     todo_id: string
   }) => Promise<Task | null>
   createTask: (data: Omit<Task, 'created_at'>) => Promise<Task>
+  findById: (id: string) => Promise<Task | null>
+  toggleCompletion: (data: {
+    id: string
+    is_completed: boolean
+  }) => Promise<Task>
 }

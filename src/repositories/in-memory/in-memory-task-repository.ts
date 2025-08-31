@@ -27,5 +27,22 @@ export function InMemoryTaskRepository(): InMemoryTaskRepositoryReturn {
     return response ? response : null
   }
 
-  return { createTask, findByTitleAndTodoId }
+  async function findById(id: string) {
+    const response = await tasks.find((task) => task.id === id)
+
+    return response ? response : null
+  }
+
+  async function toggleCompletion(data: { id: string; is_completed: boolean }) {
+    const { id, is_completed } = data
+    const taskIndex = await tasks.findIndex((task) => task.id === id)
+    await tasks.splice(taskIndex, 1, {
+      ...tasks[taskIndex],
+      is_completed,
+    })
+
+    return tasks[taskIndex]
+  }
+
+  return { createTask, findByTitleAndTodoId, findById, toggleCompletion }
 }
