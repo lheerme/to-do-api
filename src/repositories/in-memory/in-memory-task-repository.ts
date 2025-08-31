@@ -53,11 +53,19 @@ export function InMemoryTaskRepository(): InMemoryTaskRepositoryReturn {
     return tasks[taskIndex]
   }
 
+  async function deleteById(id: string) {
+    const taskIndex = tasks.findIndex((task) => task.id === id)
+    const response = await tasks.splice(taskIndex, 1)
+
+    return response[0]
+  }
+
   return {
     createTask,
     findByTitleAndTodoId,
     findById,
     toggleCompletion,
     editTaskTitle,
+    deleteById,
   }
 }
