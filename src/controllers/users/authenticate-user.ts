@@ -1,7 +1,7 @@
 import type { FastifyReply, FastifyRequest } from 'fastify'
-import { authenticateUserSchema } from '../schemas/authenticate-user-schema.ts'
-import { InvalidCredentialsError } from '../use-cases/errors/invalid-credentials-error.ts'
-import { MakeAuthenticateUserUseCase } from '../use-cases/factories/make-authenticate-user-use-case.ts'
+import { authenticateUserSchema } from '../../schemas/authenticate-user-schema.ts'
+import { InvalidCredentialsError } from '../../use-cases/errors/invalid-credentials-error.ts'
+import { MakeAuthenticateUserUseCase } from '../../use-cases/factories/make-authenticate-user-use-case.ts'
 
 export async function authenticateUser(
   request: FastifyRequest,

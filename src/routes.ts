@@ -1,9 +1,9 @@
 import type { FastifyInstance } from 'fastify'
-import { authenticateUser } from './controllers/authenticate-user.ts'
-import { createTodo } from './controllers/create-todo.ts'
-import { createUser } from './controllers/create-user.ts'
-import { getUser } from './controllers/get-user.ts'
-import { refresh } from './controllers/refresh.ts'
+import { createTodo } from './controllers/todos/create-todo.ts'
+import { authenticateUser } from './controllers/users/authenticate-user.ts'
+import { createUser } from './controllers/users/create-user.ts'
+import { getUser } from './controllers/users/get-user.ts'
+import { refresh } from './controllers/users/refresh.ts'
 import { verifyJWT } from './middlewares/verify-jwt.ts'
 
 export function routes(app: FastifyInstance) {

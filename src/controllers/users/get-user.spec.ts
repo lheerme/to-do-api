@@ -1,6 +1,6 @@
 import type { FastifyReply, FastifyRequest } from 'fastify'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
-import { makeGetUserProfile } from '../use-cases/factories/make-get-user-profile.ts'
+import { makeGetUserProfile } from '../../use-cases/factories/make-get-user-profile.ts'
 import { getUser } from './get-user.ts'
 
 const mockExecute = vi.fn()
@@ -8,7 +8,7 @@ const mockExecute = vi.fn()
 describe('Get user controller', () => {
   beforeEach(() => {
     vi.clearAllMocks()
-    vi.mock('../use-cases/factories/make-get-user-profile.ts', () => {
+    vi.mock('../../use-cases/factories/make-get-user-profile.ts', () => {
       return {
         makeGetUserProfile: vi.fn(() => ({ execute: mockExecute })),
       }

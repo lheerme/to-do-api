@@ -1,7 +1,7 @@
 import type { FastifyReply, FastifyRequest } from 'fastify'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
-import { TodoAlreadyExistsError } from '../use-cases/errors/todo-already-exists-error.ts'
-import { MakeCreateTodoUseCase } from '../use-cases/factories/make-create-todo-use-case.ts'
+import { TodoAlreadyExistsError } from '../../use-cases/errors/todo-already-exists-error.ts'
+import { MakeCreateTodoUseCase } from '../../use-cases/factories/make-create-todo-use-case.ts'
 import { createTodo } from './create-todo.ts'
 
 const mockExecute = vi.fn()
@@ -9,7 +9,7 @@ const mockExecute = vi.fn()
 describe('Create todo controller', () => {
   beforeEach(() => {
     vi.clearAllMocks()
-    vi.mock('../use-cases/factories/make-create-todo-use-case.ts', () => {
+    vi.mock('../../use-cases/factories/make-create-todo-use-case.ts', () => {
       return {
         MakeCreateTodoUseCase: vi.fn(() => ({ execute: mockExecute })),
       }

@@ -1,8 +1,8 @@
 import { beforeEach } from 'node:test'
 import type { FastifyReply, FastifyRequest } from 'fastify'
 import { describe, expect, it, vi } from 'vitest'
-import { InvalidCredentialsError } from '../use-cases/errors/invalid-credentials-error.ts'
-import { MakeAuthenticateUserUseCase } from '../use-cases/factories/make-authenticate-user-use-case.ts'
+import { InvalidCredentialsError } from '../../use-cases/errors/invalid-credentials-error.ts'
+import { MakeAuthenticateUserUseCase } from '../../use-cases/factories/make-authenticate-user-use-case.ts'
 import { authenticateUser } from './authenticate-user.ts'
 
 const mockExecute = vi.fn()
@@ -10,13 +10,16 @@ const mockExecute = vi.fn()
 describe('Authenticate user controller', () => {
   beforeEach(() => {
     vi.clearAllMocks()
-    vi.mock('../use-cases/factories/make-authenticate-user-use-case.ts', () => {
-      return {
-        MakeAuthenticateUserUseCase: vi.fn(() => ({
-          execute: mockExecute,
-        })),
+    vi.mock(
+      '../../use-cases/factories/make-authenticate-user-use-case.ts',
+      () => {
+        return {
+          MakeAuthenticateUserUseCase: vi.fn(() => ({
+            execute: mockExecute,
+          })),
+        }
       }
-    })
+    )
   })
 
   it('should be able to authenticate user', async () => {

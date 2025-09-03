@@ -1,8 +1,8 @@
 import type { FastifyReply, FastifyRequest } from 'fastify'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { ZodError } from 'zod'
-import { UserAlreadyExistsError } from '../use-cases/errors/user-already-exists-error.ts'
-import { MakeCreateUserUseCase } from '../use-cases/factories/make-create-user-use-case.ts'
+import { UserAlreadyExistsError } from '../../use-cases/errors/user-already-exists-error.ts'
+import { MakeCreateUserUseCase } from '../../use-cases/factories/make-create-user-use-case.ts'
 import { createUser } from './create-user.ts'
 
 const mockExecute = vi.fn()
@@ -10,7 +10,7 @@ const mockExecute = vi.fn()
 describe('Create user controller', () => {
   beforeEach(() => {
     vi.clearAllMocks()
-    vi.mock('../use-cases/factories/make-create-user-use-case.ts', () => {
+    vi.mock('../../use-cases/factories/make-create-user-use-case.ts', () => {
       return {
         MakeCreateUserUseCase: vi.fn(() => ({
           execute: mockExecute,
