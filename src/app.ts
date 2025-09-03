@@ -4,8 +4,10 @@ import fastify from 'fastify'
 import z, { ZodError } from 'zod'
 import { authenticateUser } from './controllers/authenticate-user.ts'
 import { createUser } from './controllers/create-user.ts'
+import { getUser } from './controllers/get-user.ts'
 import { refresh } from './controllers/refresh.ts'
 import { env } from './env.ts'
+import { verifyJWT } from './middlewares/verify-jwt.ts'
 
 export const app = fastify({
   logger: {
@@ -36,6 +38,8 @@ app.post('/users', createUser)
 app.post('/sessions', authenticateUser)
 
 app.patch('/token/refresh', refresh)
+
+app.get('/user', { onRequest: [verifyJWT] }, getUser)
 
 app.setErrorHandler((error, request, reply) => {
   if (error instanceof ZodError) {
