@@ -12,7 +12,7 @@ export async function createUser(request: FastifyRequest, reply: FastifyReply) {
     await createUserUseCase.execute(data)
   } catch (error) {
     if (error instanceof UserAlreadyExistsError) {
-      return reply.status(error.statusCode).send({ message: error.message })
+      return reply.code(error.statusCode).send({ message: error.message })
     }
 
     throw error
