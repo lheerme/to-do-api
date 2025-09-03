@@ -26,8 +26,6 @@ describe('get user todo use case', () => {
         id: `todo-${i}`,
         title: `todo-${i}`,
         created_at: new Date(),
-        tasks_completed: 0,
-        total_tasks: 0,
         user_id: userId,
       })
     }
@@ -36,8 +34,6 @@ describe('get user todo use case', () => {
       id: 'todo-01',
       title: 'todo-01',
       created_at: new Date(),
-      tasks_completed: 0,
-      total_tasks: 0,
       user_id: 'user-02',
     })
 
@@ -57,8 +53,6 @@ describe('get user todo use case', () => {
         id: `todo-${i}`,
         title: `todo-${i}`,
         created_at: new Date(),
-        tasks_completed: 0,
-        total_tasks: 0,
         user_id: userId,
       })
     }

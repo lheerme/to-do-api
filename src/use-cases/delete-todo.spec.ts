@@ -16,8 +16,6 @@ describe('Delete todo use case', () => {
       created_at: new Date(),
       id: 'id-01',
       title: 'todo-01',
-      tasks_completed: 0,
-      total_tasks: 0,
       user_id: 'user-01',
     })
 
@@ -25,8 +23,6 @@ describe('Delete todo use case', () => {
       created_at: new Date(),
       id: 'id-02',
       title: 'todo-02',
-      tasks_completed: 0,
-      total_tasks: 0,
       user_id: 'user-01',
     })
   })

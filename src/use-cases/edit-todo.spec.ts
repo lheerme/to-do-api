@@ -21,8 +21,6 @@ describe('edit todo use case', () => {
       id: todoId,
       created_at: new Date(),
       title: currentTitle,
-      tasks_completed: 0,
-      total_tasks: 0,
       user_id: userId,
     })
   })
