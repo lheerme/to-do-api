@@ -6,21 +6,18 @@ export interface InMemoryTodoRepositoryReturn extends TodoRepository {}
 export function InMemoryTodoRepository(): InMemoryTodoRepositoryReturn {
   const todos: Todo[] = []
 
-  async function createTodo(data: Todo) {
-    await todos.push(data)
+  async function createTodo(data: Omit<Todo, 'created_at'>) {
+    const created_at = new Date()
+    await todos.push({ ...data, created_at })
 
-    return data
+    return { ...data, created_at }
   }
 
-  async function findByTitleAndUserId({
-    title,
-    userId,
-  }: {
-    title: string
-    userId: string
-  }) {
+  async function findByTitleAndUserId(data: Pick<Todo, 'title' | 'user_id'>) {
+    const { title, user_id } = data
+
     const response = await todos.find(
-      (todo) => todo.title === title && todo.user_id === userId
+      (todo) => todo.title === title && todo.user_id === user_id
     )
     return response ? response : null
   }

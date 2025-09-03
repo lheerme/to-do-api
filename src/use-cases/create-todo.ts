@@ -4,7 +4,9 @@ import type { TodoRepository } from '../repositories/todo-repository.ts'
 import type { CreateTodoForm } from '../schemas/create-todo-schema.ts'
 import { TodoAlreadyExistsError } from './errors/todo-already-exists-error.ts'
 
-export interface CreateTodoRequest extends CreateTodoForm {}
+export interface CreateTodoRequest extends CreateTodoForm {
+  user_id: string
+}
 
 export interface CreateTodoResponse {
   todo: Todo
@@ -21,7 +23,7 @@ export function CreateTodo(todoRepository: TodoRepository): CreateTodoReturn {
     const { title, user_id } = todoData
     const isTitleUsed = await todoRepository.findByTitleAndUserId({
       title,
-      userId: user_id,
+      user_id,
     })
 
     if (isTitleUsed) {
@@ -29,14 +31,10 @@ export function CreateTodo(todoRepository: TodoRepository): CreateTodoReturn {
     }
 
     const id = randomUUID()
-    const created_at = new Date()
 
     const todo = await todoRepository.createTodo({
       id,
       title,
-      created_at,
-      tasks_completed: 0,
-      total_tasks: 0,
       user_id,
     })
 

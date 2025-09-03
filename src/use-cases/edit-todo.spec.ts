@@ -19,7 +19,6 @@ describe('edit todo use case', () => {
 
     await todoRepository.createTodo({
       id: todoId,
-      created_at: new Date(),
       title: currentTitle,
       user_id: userId,
     })

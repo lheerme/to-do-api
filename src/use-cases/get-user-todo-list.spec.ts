@@ -25,7 +25,6 @@ describe('get user todo use case', () => {
       await todoRepository.createTodo({
         id: `todo-${i}`,
         title: `todo-${i}`,
-        created_at: new Date(),
         user_id: userId,
       })
     }
@@ -33,7 +32,6 @@ describe('get user todo use case', () => {
     await todoRepository.createTodo({
       id: 'todo-01',
       title: 'todo-01',
-      created_at: new Date(),
       user_id: 'user-02',
     })
 
@@ -52,7 +50,6 @@ describe('get user todo use case', () => {
       await todoRepository.createTodo({
         id: `todo-${i}`,
         title: `todo-${i}`,
-        created_at: new Date(),
         user_id: userId,
       })
     }

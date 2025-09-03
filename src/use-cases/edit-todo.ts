@@ -23,7 +23,7 @@ export function EditTodo(todoRepository: TodoRepository): EditTodoReturn {
     const doesTodoExists = !!(await todoRepository.findById(id))
     const isTitleUsed = !!(await todoRepository.findByTitleAndUserId({
       title,
-      userId: user_id,
+      user_id,
     }))
 
     if (!doesTodoExists) {

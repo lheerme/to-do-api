@@ -13,14 +13,12 @@ describe('Delete todo use case', () => {
     sut = DeleteTodo(todoRepository)
 
     await todoRepository.createTodo({
-      created_at: new Date(),
       id: 'id-01',
       title: 'todo-01',
       user_id: 'user-01',
     })
 
     await todoRepository.createTodo({
-      created_at: new Date(),
       id: 'id-02',
       title: 'todo-02',
       user_id: 'user-01',
