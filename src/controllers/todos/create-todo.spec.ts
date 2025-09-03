@@ -1,5 +1,6 @@
 import type { FastifyReply, FastifyRequest } from 'fastify'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
+import { ZodError } from 'zod'
 import { TodoAlreadyExistsError } from '../../use-cases/errors/todo-already-exists-error.ts'
 import { MakeCreateTodoUseCase } from '../../use-cases/factories/make-create-todo-use-case.ts'
 import { createTodo } from './create-todo.ts'
@@ -68,5 +69,24 @@ describe('Create todo controller', () => {
     expect(MakeCreateTodoUseCase).toHaveBeenCalled()
     expect(reply.code).toHaveBeenCalledWith(statusCode)
     expect(reply.send).toHaveBeenCalledWith({ message })
+  })
+
+  it('should not be able to create todo with an invalid title', async () => {
+    const title = ''
+
+    const request = {
+      body: {
+        title,
+      },
+      user: {
+        sub: 'id-01',
+      },
+    } as FastifyRequest
+
+    const reply = vi.fn() as unknown as FastifyReply
+
+    await expect(async () => {
+      await createTodo(request, reply)
+    }).rejects.toBeInstanceOf(ZodError)
   })
 })
