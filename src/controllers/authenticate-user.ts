@@ -11,11 +11,39 @@ export async function authenticateUser(
   const authenticateUserUseCase = MakeAuthenticateUserUseCase()
 
   try {
-    await authenticateUserUseCase.execute({ email, password })
-    return reply.code(200).send()
+    const { user } = await authenticateUserUseCase.execute({ email, password })
+
+    const token = await reply.jwtSign(
+      {},
+      {
+        sign: {
+          sub: user.id,
+        },
+      }
+    )
+
+    const refreshToken = await reply.jwtSign(
+      {},
+      {
+        sign: {
+          sub: user.id,
+          expiresIn: '7d',
+        },
+      }
+    )
+
+    return reply
+      .setCookie('refreshToken', refreshToken, {
+        path: '/',
+        secure: true,
+        sameSite: true,
+        httpOnly: true,
+      })
+      .code(200)
+      .send({ token })
   } catch (error) {
     if (error instanceof InvalidCredentialsError) {
-      return reply.status(error.statusCode).send({ message: error.message })
+      return reply.code(error.statusCode).send({ message: error.message })
     }
 
     throw error
