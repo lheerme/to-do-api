@@ -1,5 +1,6 @@
 import type { FastifyInstance } from 'fastify'
 import { createTodo } from './controllers/todos/create-todo.ts'
+import { editTodo } from './controllers/todos/edit-todo.ts'
 import { authenticateUser } from './controllers/users/authenticate-user.ts'
 import { createUser } from './controllers/users/create-user.ts'
 import { getUser } from './controllers/users/get-user.ts'
@@ -15,4 +16,5 @@ export function routes(app: FastifyInstance) {
 
   // to-dos
   app.post('/todos', { onRequest: [verifyJWT] }, createTodo)
+  app.put('/todos', { onRequest: [verifyJWT] }, editTodo)
 }
