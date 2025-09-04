@@ -25,8 +25,10 @@ describe('Edit todo controller', () => {
     mockExecute.mockReturnValue({ todo: { id, title } })
 
     const request = {
-      body: {
+      params: {
         id,
+      },
+      body: {
         title,
       },
       user: {
@@ -55,8 +57,10 @@ describe('Edit todo controller', () => {
     mockExecute.mockRejectedValue(new TodoAlreadyExistsError())
 
     const request = {
-      body: {
+      params: {
         id,
+      },
+      body: {
         title,
       },
       user: {
@@ -83,8 +87,10 @@ describe('Edit todo controller', () => {
     const id = randomUUID()
 
     const request = {
-      body: {
+      params: {
         id,
+      },
+      body: {
         title,
       },
       user: {

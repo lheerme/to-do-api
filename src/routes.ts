@@ -16,5 +16,5 @@ export function routes(app: FastifyInstance) {
 
   // to-dos
   app.post('/todos', { onRequest: [verifyJWT] }, createTodo)
-  app.put('/todos', { onRequest: [verifyJWT] }, editTodo)
+  app.put('/todos/:id', { onRequest: [verifyJWT] }, editTodo)
 }
