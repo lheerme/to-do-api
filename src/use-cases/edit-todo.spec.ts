@@ -53,4 +53,14 @@ describe('edit todo use case', () => {
       })
     }).rejects.toBeInstanceOf(TodoAlreadyExistsError)
   })
+
+  it('should not be able edit todo from another user', async () => {
+    await expect(async () => {
+      await sut.execute({
+        id: todoId,
+        title: currentTitle,
+        user_id: 'user-inexistente',
+      })
+    }).rejects.toBeInstanceOf(ResourceNotFoundError)
+  })
 })

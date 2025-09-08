@@ -20,13 +20,18 @@ export function EditTodo(todoRepository: TodoRepository): EditTodoReturn {
   async function execute(data: EditTodoRequest) {
     const { id, title, user_id } = data
 
-    const doesTodoExists = !!(await todoRepository.findById(id))
+    const todoById = await todoRepository.findById(id)
+    const doesTodoExists = !!todoById
     const isTitleUsed = !!(await todoRepository.findByTitleAndUserId({
       title,
       user_id,
     }))
 
     if (!doesTodoExists) {
+      throw new ResourceNotFoundError()
+    }
+
+    if (todoById.user_id !== user_id) {
       throw new ResourceNotFoundError()
     }
 
