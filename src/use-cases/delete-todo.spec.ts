@@ -26,14 +26,20 @@ describe('Delete todo use case', () => {
   })
 
   it('should be able to delete todo', async () => {
-    const { todo } = await sut.execute({ id: 'id-02' })
+    const { todo } = await sut.execute({ id: 'id-02', userId: 'user-01' })
 
     expect(todo.id).toBe('id-02')
   })
 
   it('should not be able to delete a todo that does not exists', async () => {
     await expect(async () => {
-      await sut.execute({ id: 'id-inexistente' })
+      await sut.execute({ id: 'id-inexistente', userId: 'user-01' })
+    }).rejects.toBeInstanceOf(ResourceNotFoundError)
+  })
+
+  it('should not be able to delete a todo from another user', async () => {
+    await expect(async () => {
+      await sut.execute({ id: 'id-01', userId: 'user-inexistente' })
     }).rejects.toBeInstanceOf(ResourceNotFoundError)
   })
 })

@@ -5,11 +5,12 @@ import { makeDeleteTodoUseCase } from '../../use-cases/factories/make-delete-tod
 
 export async function deleteTodo(request: FastifyRequest, reply: FastifyReply) {
   const { id } = idParamSchema.parse(request.params)
+  const userId = request.user.sub
 
   try {
     const deleteTodoUseCase = makeDeleteTodoUseCase()
 
-    await deleteTodoUseCase.execute({ id })
+    await deleteTodoUseCase.execute({ id, userId })
 
     return reply.code(204).send()
   } catch (error) {
