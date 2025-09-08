@@ -11,7 +11,7 @@ export async function up(pgm: MigrationBuilder): Promise<void> {
       last_name: { type: 'VARCHAR(50)', notNull: true },
       email: { type: 'VARCHAR(100)', notNull: true },
       password_hash: { type: 'TEXT', notNull: true },
-      created_at: { type: 'TIMESTAMP', default: 'NOW()' },
+      created_at: { type: 'TIMESTAMPTZ', default: pgm.func('now()') },
     },
     {
       ifNotExists: true,

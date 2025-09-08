@@ -6,7 +6,7 @@ export async function up(pgm: MigrationBuilder): Promise<void> {
   await pgm.createTable('todos', {
     id: { type: 'UUID', primaryKey: true },
     title: { type: 'VARCHAR(50)', notNull: true },
-    created_at: { type: 'TIMESTAMP', default: 'NOW()' },
+    created_at: { type: 'TIMESTAMPTZ', default: pgm.func('now()') },
     user_id: { type: 'UUID', references: 'users' },
   })
 }
