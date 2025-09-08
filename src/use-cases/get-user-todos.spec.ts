@@ -3,18 +3,15 @@ import {
   InMemoryTodoRepository,
   type InMemoryTodoRepositoryReturn,
 } from '../repositories/in-memory/in-memory-todo-repository.ts'
-import {
-  GetUserTodoList,
-  type GetUserTodoListReturn,
-} from './get-user-todo-list.ts'
+import { GetUserTodos, type GetUserTodosReturn } from './get-user-todos.ts'
 
 let todoRepository: InMemoryTodoRepositoryReturn
-let sut: GetUserTodoListReturn
+let sut: GetUserTodosReturn
 
-describe('get user todo use case', () => {
+describe('get user todos use case', () => {
   beforeEach(() => {
     todoRepository = InMemoryTodoRepository()
-    sut = GetUserTodoList(todoRepository)
+    sut = GetUserTodos(todoRepository)
   })
 
   it('should be able to get user todos', async () => {
