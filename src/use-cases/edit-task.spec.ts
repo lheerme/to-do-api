@@ -29,6 +29,7 @@ describe('Edit task use case', () => {
       id: 'task-01',
       title: 'title-new',
       todo_id: 'todo-01',
+      user_id: 'user-01',
     })
 
     expect(task.title).toBe('title-new')
@@ -40,6 +41,7 @@ describe('Edit task use case', () => {
         id: 'task-02',
         title: 'title-new',
         todo_id: 'todo-02',
+        user_id: 'user-01',
       })
     }).rejects.toBeInstanceOf(ResourceNotFoundError)
   })
@@ -50,7 +52,19 @@ describe('Edit task use case', () => {
         id: 'task-01',
         title: 'title-01',
         todo_id: 'todo-01',
+        user_id: 'user-01',
       })
     }).rejects.toBeInstanceOf(TaskAlreadyExistsError)
+  })
+
+  it('should not be able to edit an task with wrong user_id', async () => {
+    await expect(async () => {
+      await sut.execute({
+        id: 'task-01',
+        title: 'title-new',
+        todo_id: 'todo-01',
+        user_id: 'user-07',
+      })
+    }).rejects.toBeInstanceOf(ResourceNotFoundError)
   })
 })

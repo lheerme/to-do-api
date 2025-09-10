@@ -7,6 +7,7 @@ export interface EditTaskRequest {
   id: string
   title: string
   todo_id: string
+  user_id: string
 }
 
 export interface EditTaskResponse {
@@ -19,11 +20,16 @@ export interface EditTaskReturn {
 
 export function EditTask(taskRepository: TaskRepository): EditTaskReturn {
   async function execute(data: EditTaskRequest) {
-    const { id, title, todo_id } = data
+    const { id, title, todo_id, user_id } = data
 
-    const doesTaskExists = !!(await taskRepository.findById(id))
+    const taskById = await taskRepository.findById(id)
+    const doesTaskExists = !!taskById
 
     if (!doesTaskExists) {
+      throw new ResourceNotFoundError()
+    }
+
+    if (taskById.user_id !== user_id) {
       throw new ResourceNotFoundError()
     }
 
