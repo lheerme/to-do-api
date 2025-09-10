@@ -1,5 +1,6 @@
 import type { FastifyInstance } from 'fastify'
 import { createTask } from './controllers/tasks/create-task.ts'
+import { editTask } from './controllers/tasks/edit-task.ts'
 import { createTodo } from './controllers/todos/create-todo.ts'
 import { deleteTodo } from './controllers/todos/delete-todo.ts'
 import { editTodo } from './controllers/todos/edit-todo.ts'
@@ -25,4 +26,5 @@ export function routes(app: FastifyInstance) {
 
   // tasks
   app.post('/todos/:id', { onRequest: [verifyJWT] }, createTask)
+  app.put('/todos/:todoId/tasks/:taskId', { onRequest: [verifyJWT] }, editTask)
 }
