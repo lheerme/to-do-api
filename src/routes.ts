@@ -2,6 +2,7 @@ import type { FastifyInstance } from 'fastify'
 import { createTask } from './controllers/tasks/create-task.ts'
 import { deleteTask } from './controllers/tasks/delete-task.ts'
 import { editTask } from './controllers/tasks/edit-task.ts'
+import { toggleTaskCompletion } from './controllers/tasks/toggle-task-completion.ts'
 import { createTodo } from './controllers/todos/create-todo.ts'
 import { deleteTodo } from './controllers/todos/delete-todo.ts'
 import { editTodo } from './controllers/todos/edit-todo.ts'
@@ -32,5 +33,10 @@ export function routes(app: FastifyInstance) {
     '/todos/:todoId/tasks/:taskId',
     { onRequest: [verifyJWT] },
     deleteTask
+  )
+  app.patch(
+    '/todos/:todoId/tasks/:taskId',
+    { onRequest: [verifyJWT] },
+    toggleTaskCompletion
   )
 }
