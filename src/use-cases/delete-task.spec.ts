@@ -24,16 +24,22 @@ describe('Delete task use case', () => {
   })
 
   it('should be able to delete task', async () => {
-    await sut.execute({ id: 'id-01' })
+    await sut.execute({ id: 'id-01', userId: 'user-01' })
 
     await expect(async () => {
-      await sut.execute({ id: 'id-01' })
+      await sut.execute({ id: 'id-01', userId: 'user-01' })
     }).rejects.toBeInstanceOf(ResourceNotFoundError)
   })
 
   it('should not be able to delete a inexistent task', async () => {
     await expect(async () => {
-      await sut.execute({ id: 'id-02' })
+      await sut.execute({ id: 'id-02', userId: 'user-01' })
+    }).rejects.toBeInstanceOf(ResourceNotFoundError)
+  })
+
+  it('should not be able to delete a task from another user', async () => {
+    await expect(async () => {
+      await sut.execute({ id: 'id-01', userId: 'user-02' })
     }).rejects.toBeInstanceOf(ResourceNotFoundError)
   })
 })

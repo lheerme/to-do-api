@@ -4,6 +4,7 @@ import { ResourceNotFoundError } from './errors/resource-not-found-error.ts'
 
 export interface DeleteTaskRequest {
   id: string
+  userId: string
 }
 export interface DeleteTaskResponse {
   task: Task
@@ -15,11 +16,16 @@ export interface DeleteTaskReturn {
 
 export function DeleteTask(taskRepository: TaskRepository): DeleteTaskReturn {
   async function execute(data: DeleteTaskRequest) {
-    const { id } = data
+    const { id, userId } = data
 
-    const doesTaskExists = !!(await taskRepository.findById(id))
+    const taskById = await taskRepository.findById(id)
+    const doesTaskExists = !!taskById
 
     if (!doesTaskExists) {
+      throw new ResourceNotFoundError()
+    }
+
+    if (taskById.user_id !== userId) {
       throw new ResourceNotFoundError()
     }
 
