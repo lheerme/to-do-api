@@ -27,14 +27,22 @@ describe('Toggle task completion use cause', () => {
   })
 
   it('should be able to toggle task completion', async () => {
-    const { task } = await sut.execute({ id: 'task-01', is_completed: true })
+    const { task } = await sut.execute({
+      id: 'task-01',
+      user_id: 'user-01',
+      is_completed: true,
+    })
 
     expect(task.is_completed).toBe(true)
   })
 
   it('should not be able to toggle task completion of an inexistent task', async () => {
     await expect(async () => {
-      await sut.execute({ id: 'task-02', is_completed: true })
+      await sut.execute({
+        id: 'task-02',
+        user_id: 'user-01',
+        is_completed: true,
+      })
     }).rejects.toBeInstanceOf(ResourceNotFoundError)
   })
 })

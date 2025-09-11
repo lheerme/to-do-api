@@ -4,6 +4,7 @@ import { ResourceNotFoundError } from './errors/resource-not-found-error.ts'
 
 export interface ToggleTaskCompletionRequest {
   id: string
+  user_id: string
   is_completed: boolean
 }
 export interface ToggleTaskCompletionResponse {
@@ -20,11 +21,16 @@ export function ToggleTaskCompletion(
   taskRepository: TaskRepository
 ): ToggleTaskCompletionReturn {
   async function execute(data: ToggleTaskCompletionRequest) {
-    const { id, is_completed } = data
+    const { id, is_completed, user_id } = data
 
-    const doesTaskExists = !!(await taskRepository.findById(id))
+    const taskById = await taskRepository.findById(id)
+    const doesTaskExists = !!taskById
 
     if (!doesTaskExists) {
+      throw new ResourceNotFoundError()
+    }
+
+    if (taskById.user_id !== user_id) {
       throw new ResourceNotFoundError()
     }
 
