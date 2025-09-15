@@ -66,10 +66,20 @@ export function NodePgTaskRepository(): TaskRepository {
     return response[0]
   }
 
+  async function findByTodoId(id: string) {
+    const query = 'SELECT * FROM tasks WHERE todo_id = $1'
+    const values = [id]
+
+    const response = await db.query<Task>(query, values)
+
+    return response
+  }
+
   return {
     findByTitleAndTodoId,
     createTask,
     findById,
+    findByTodoId,
     toggleCompletion,
     editTaskTitle,
     deleteById,

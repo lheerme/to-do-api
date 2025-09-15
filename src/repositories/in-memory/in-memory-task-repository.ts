@@ -60,10 +60,17 @@ export function InMemoryTaskRepository(): InMemoryTaskRepositoryReturn {
     return response[0]
   }
 
+  async function findByTodoId(id: string) {
+    const taskList = await tasks.filter((task) => task.todo_id === id)
+
+    return taskList
+  }
+
   return {
     createTask,
     findByTitleAndTodoId,
     findById,
+    findByTodoId,
     toggleCompletion,
     editTaskTitle,
     deleteById,
