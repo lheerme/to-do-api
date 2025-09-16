@@ -6,6 +6,7 @@ import { toggleTaskCompletion } from './controllers/tasks/toggle-task-completion
 import { createTodo } from './controllers/todos/create-todo.ts'
 import { deleteTodo } from './controllers/todos/delete-todo.ts'
 import { editTodo } from './controllers/todos/edit-todo.ts'
+import { getTodo } from './controllers/todos/get-todo.ts'
 import { authenticateUser } from './controllers/users/authenticate-user.ts'
 import { createUser } from './controllers/users/create-user.ts'
 import { getUser } from './controllers/users/get-user.ts'
@@ -25,6 +26,7 @@ export function routes(app: FastifyInstance) {
   app.put('/todos/:id', { onRequest: [verifyJWT] }, editTodo)
   app.delete('/todos/:id', { onRequest: [verifyJWT] }, deleteTodo)
   app.get('/todos', { onRequest: [verifyJWT] }, getUserTodos)
+  app.get('/todos/:id', { onRequest: [verifyJWT] }, getTodo)
 
   // tasks
   app.post('/todos/:id', { onRequest: [verifyJWT] }, createTask)
