@@ -1,6 +1,7 @@
 import type { FastifyReply, FastifyRequest } from 'fastify'
 import { createTaskSchema } from '../../schemas/create-task-schema.ts'
 import { idParamSchema } from '../../schemas/id-param-schema.ts'
+import { ResourceNotFoundError } from '../../use-cases/errors/resource-not-found-error.ts'
 import { TaskAlreadyExistsError } from '../../use-cases/errors/task-already-exists-error.ts'
 import { MakeCreateTaskUseCase } from '../../use-cases/factories/make-create-task-use-case.ts'
 
@@ -20,7 +21,10 @@ export async function createTask(request: FastifyRequest, reply: FastifyReply) {
 
     return reply.code(201).send({ data: task })
   } catch (error) {
-    if (error instanceof TaskAlreadyExistsError) {
+    if (
+      error instanceof TaskAlreadyExistsError ||
+      error instanceof ResourceNotFoundError
+    ) {
       return reply.code(error.statusCode).send({ message: error.message })
     }
 

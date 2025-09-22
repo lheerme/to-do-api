@@ -3,16 +3,29 @@ import {
   InMemoryTaskRepository,
   type InMemoryTaskRepositoryReturn,
 } from '../repositories/in-memory/in-memory-task-repository.ts'
+import {
+  InMemoryTodoRepository,
+  type InMemoryTodoRepositoryReturn,
+} from '../repositories/in-memory/in-memory-todo-repository.ts'
 import { CreateTask, type CreateTaskReturn } from './create-task.ts'
+import { ResourceNotFoundError } from './errors/resource-not-found-error.ts'
 import { TaskAlreadyExistsError } from './errors/task-already-exists-error.ts'
 
+let todoRepository: InMemoryTodoRepositoryReturn
 let taskRepository: InMemoryTaskRepositoryReturn
 let sut: CreateTaskReturn
 
 describe('Create task use case', () => {
-  beforeEach(() => {
+  beforeEach(async () => {
+    todoRepository = InMemoryTodoRepository()
     taskRepository = InMemoryTaskRepository()
-    sut = CreateTask(taskRepository)
+    sut = CreateTask(taskRepository, todoRepository)
+
+    await todoRepository.createTodo({
+      id: 'todo-01',
+      title: 'todo-title',
+      user_id: 'user-01',
+    })
   })
 
   it('should be able to create task', async () => {
@@ -49,6 +62,12 @@ describe('Create task use case', () => {
     const title = 'task-title'
     const user_id = 'user-01'
 
+    await todoRepository.createTodo({
+      id: 'todo-02',
+      title: 'todo-title-2',
+      user_id: 'user-01',
+    })
+
     await sut.execute({
       title,
       todo_id: 'todo-01',
@@ -62,5 +81,15 @@ describe('Create task use case', () => {
     })
 
     expect(task.id).toEqual(expect.any(String))
+  })
+
+  it('should not be able to create task for a to-do list of another user', async () => {
+    await expect(async () => {
+      await sut.execute({
+        title: 'task-title',
+        todo_id: 'todo-01',
+        user_id: 'user-02',
+      })
+    }).rejects.toBeInstanceOf(ResourceNotFoundError)
   })
 })
