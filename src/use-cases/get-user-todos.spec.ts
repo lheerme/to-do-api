@@ -43,7 +43,7 @@ describe('get user todos use case', () => {
   it('should be able to return paginated user todos', async () => {
     const userId = 'user-01'
 
-    for (let i = 0; i < 22; i++) {
+    for (let i = 0; i < 12; i++) {
       await todoRepository.createTodo({
         id: `todo-${i}`,
         title: `todo-${i}`,
@@ -54,8 +54,8 @@ describe('get user todos use case', () => {
     const { todos } = await sut.execute({ userId, page: 2 })
 
     expect(todos).toEqual([
-      expect.objectContaining({ title: 'todo-20' }),
-      expect.objectContaining({ title: 'todo-21' }),
+      expect.objectContaining({ title: 'todo-10' }),
+      expect.objectContaining({ title: 'todo-11' }),
     ])
   })
 })

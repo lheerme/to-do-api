@@ -1,4 +1,5 @@
 import type { FastifyReply, FastifyRequest } from 'fastify'
+import z from 'zod'
 import { makeGetUserTodosUseCase } from '../../use-cases/factories/make-get-user-todos-use-case.ts'
 
 export async function getUserTodos(
@@ -6,11 +7,17 @@ export async function getUserTodos(
   reply: FastifyReply
 ) {
   const userId = request.user.sub
+  const requestQuerySchema = z.object({
+    page: z.coerce.number().default(1).catch(1),
+  })
+
+  const { page } = requestQuerySchema.parse(request.query)
 
   const getUserTodosUseCase = makeGetUserTodosUseCase()
+  const { todos, info } = await getUserTodosUseCase.execute({
+    userId,
+    page: Number.isNaN(page) ? 1 : page,
+  })
 
-  // TODO: implementar a paginação
-  const { todos } = await getUserTodosUseCase.execute({ userId, page: 1 })
-
-  return reply.code(200).send({ data: todos })
+  return reply.code(200).send({ info, data: todos })
 }

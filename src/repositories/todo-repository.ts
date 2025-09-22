@@ -9,4 +9,5 @@ export interface TodoRepository {
   findByUserId: (userId: string, page: number) => Promise<Todo[]>
   findById: (id: string) => Promise<Todo | null>
   deleteById: (id: string) => Promise<Todo>
+  countTodosByUserId: (userId: string) => Promise<{ total_todos: number }>
 }

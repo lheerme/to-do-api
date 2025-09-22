@@ -268,14 +268,25 @@ export function routes(app: FastifyTypedInstance) {
         ],
         description: 'Get user to-dos',
         tags: ['todo'],
+        querystring: z.object({
+          page: z.coerce.number().default(1).catch(1),
+        }),
         response: {
           200: z
             .object({
-              data: z.object({
-                id: z.uuid(),
-                title: z.string().default('Groceries'),
-                created_at: z.date(),
-                user_id: z.uuid(),
+              data: z.array(
+                z.object({
+                  id: z.uuid(),
+                  title: z.string().default('Groceries'),
+                  created_at: z.date(),
+                  user_id: z.uuid(),
+                })
+              ),
+              info: z.object({
+                count: z.number(),
+                total_pages: z.number(),
+                next: z.number().nullable(),
+                prev: z.number().nullable(),
               }),
             })
             .describe('To-dos returned'),

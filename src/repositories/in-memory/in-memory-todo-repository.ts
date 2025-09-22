@@ -23,8 +23,11 @@ export function InMemoryTodoRepository(): InMemoryTodoRepositoryReturn {
   }
 
   async function findByUserId(userId: string, page: number) {
+    const limit = 10
+    const offset = (page - 1) * limit
+
     const response = await todos.filter((todo) => todo.user_id === userId)
-    const paginatedResponse = response.slice((page - 1) * 20, page * 20)
+    const paginatedResponse = response.slice(offset, page * limit)
 
     return paginatedResponse
   }
@@ -51,7 +54,15 @@ export function InMemoryTodoRepository(): InMemoryTodoRepositoryReturn {
     return deletedTodo[0]
   }
 
+  async function countTodosByUserId(userId: string) {
+    const todosByUserId = await todos.filter((todo) => todo.user_id === userId)
+    const total_todos = todosByUserId.length
+
+    return { total_todos }
+  }
+
   return {
+    countTodosByUserId,
     createTodo,
     editTodoTitle,
     findByTitleAndUserId,

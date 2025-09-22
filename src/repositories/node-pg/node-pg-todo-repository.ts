@@ -2,6 +2,10 @@ import { db } from '../../database/connection.ts'
 import type { Todo } from '../../interfaces/todo.ts'
 import type { TodoRepository } from '../todo-repository.ts'
 
+interface TotalTodos {
+  total_todos: number
+}
+
 export function NodePgTodoRepository(): TodoRepository {
   async function createTodo(data: Omit<Todo, 'created_at'>) {
     const { id, title, user_id } = data
@@ -37,9 +41,11 @@ export function NodePgTodoRepository(): TodoRepository {
     return todo.length ? todo[0] : null
   }
 
-  // TODO: Paginação
-  async function findByUserId(userId: string, _page: number) {
-    const query = 'SELECT * FROM todos WHERE user_id = $1'
+  async function findByUserId(userId: string, page: number) {
+    const limit = 10
+    const offset = (page - 1) * limit
+
+    const query = `SELECT * FROM todos WHERE user_id = $1 ORDER BY created_at DESC LIMIT ${limit} OFFSET ${offset}`
     const values = [userId]
 
     const todos = await db.query<Todo>(query, values)
@@ -65,6 +71,18 @@ export function NodePgTodoRepository(): TodoRepository {
     return todo[0]
   }
 
+  async function countTodosByUserId(userId: string) {
+    const query =
+      'SELECT COUNT(*) as total_todos FROM todos WHERE user_id = $1;'
+    const values = [userId]
+
+    const { total_todos } = await db
+      .query<TotalTodos>(query, values)
+      .then((data) => data[0])
+
+    return { total_todos }
+  }
+
   return {
     createTodo,
     editTodoTitle,
@@ -72,5 +90,6 @@ export function NodePgTodoRepository(): TodoRepository {
     findByUserId,
     findById,
     deleteById,
+    countTodosByUserId,
   }
 }

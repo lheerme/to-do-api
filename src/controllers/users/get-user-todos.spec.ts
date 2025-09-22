@@ -23,6 +23,7 @@ describe('Get user todos controller', () => {
       user: {
         sub: 'user-01',
       },
+      query: {},
     } as FastifyRequest
 
     const reply = {
