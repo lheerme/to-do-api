@@ -12,8 +12,9 @@ export const createUserSchema = z.object({
     .max(50, 'Last name too long.')
     .trim(),
   email: z.email(),
-  password: z.coerce
+  password: z
     .string()
+    .min(1, { message: 'Password is required.' })
     .min(8, { message: 'Password must be at least 8 characters long.' })
     .regex(/[0-9]/, { message: 'Password must contain at least one number.' }),
 })

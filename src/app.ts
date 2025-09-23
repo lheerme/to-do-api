@@ -9,7 +9,6 @@ import {
   validatorCompiler,
   type ZodTypeProvider,
 } from 'fastify-type-provider-zod'
-import z, { ZodError } from 'zod'
 import { env } from './env.ts'
 import { routes } from './routes.ts'
 
@@ -68,10 +67,12 @@ app.register(fastifyJwt, {
 app.register(routes)
 
 app.setErrorHandler((error, request, reply) => {
-  if (error instanceof ZodError) {
-    return reply
-      .code(400)
-      .send({ message: 'Validation error.', issues: z.flattenError(error) })
+  if (error.statusCode === 400) {
+    const message = error.validation
+      ? error.validation[0].message
+      : 'Validation error.'
+
+    return reply.code(400).send({ message })
   }
 
   request.log.error(error)
