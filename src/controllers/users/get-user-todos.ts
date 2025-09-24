@@ -12,7 +12,6 @@ export async function getUserTodos(
   })
 
   const { page } = requestQuerySchema.parse(request.query)
-  console.log(Number.isNaN(page) ? 1 : page)
 
   const getUserTodosUseCase = makeGetUserTodosUseCase()
   const { todos, info } = await getUserTodosUseCase.execute({

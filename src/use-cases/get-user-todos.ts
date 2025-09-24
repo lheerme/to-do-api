@@ -25,7 +25,6 @@ export function GetUserTodos(
 ): GetUserTodosReturn {
   async function execute({ userId, page }: GetUserTodosRequest) {
     const { total_todos } = await todoRepository.countTodosByUserId(userId)
-    console.log(total_todos)
     const totalTodos = Number(total_todos)
     const limit = 10
     const totalPages =
