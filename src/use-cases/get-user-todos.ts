@@ -25,9 +25,11 @@ export function GetUserTodos(
 ): GetUserTodosReturn {
   async function execute({ userId, page }: GetUserTodosRequest) {
     const { total_todos } = await todoRepository.countTodosByUserId(userId)
+    console.log(total_todos)
     const totalTodos = Number(total_todos)
     const limit = 10
-    const totalPages = Math.ceil(totalTodos / limit)
+    const totalPages =
+      Math.ceil(totalTodos / limit) < 1 ? 1 : Math.ceil(totalTodos / limit)
     const formattedPage = page <= totalPages ? page : totalPages
     const nextPage = page < totalPages ? page + 1 : null
     const prevPage = formattedPage <= 1 ? null : formattedPage - 1
