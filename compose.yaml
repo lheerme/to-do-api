@@ -1,18 +1,6 @@
 services:
-  app:
-    build: .
-    depends_on:
-      - database
-    container_name: to-do-app
-    working_dir: /app
-    volumes:
-      - .:/app
-      - /app/node_modules
-    ports:
-      - ${PORT:-8080}:${PORT:-8080}
   database:
     image: "postgres:17.6-alpine"
-    container_name: to-do-database
     environment:
       POSTGRES_PORT: 5432
       POSTGRES_PASSWORD: password
@@ -21,3 +9,22 @@ services:
     ports:
       - "5432:5432"
     restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -p 5432 -U local_user -d to_do"]
+      start_period: 0s
+      interval: 5s
+      timeout: 5s
+      retries: 5
+  app:
+    build: .
+    container_name: to-do-app
+    working_dir: /app
+    command: sh -c "npm run migrate:up && npm run dev"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    ports:
+      - ${PORT:-8080}:${PORT:-8080}
+    depends_on:
+      database:
+        condition: service_healthy
