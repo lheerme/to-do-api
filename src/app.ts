@@ -1,4 +1,5 @@
 import fastifyCookie from '@fastify/cookie'
+import cors from '@fastify/cors'
 import fastifyJwt from '@fastify/jwt'
 import fastifySwagger from '@fastify/swagger'
 import fastifySwaggerUi from '@fastify/swagger-ui'
@@ -26,6 +27,10 @@ export const app = fastify({
 
 app.setValidatorCompiler(validatorCompiler)
 app.setSerializerCompiler(serializerCompiler)
+
+app.register(cors, {
+  origin: '*',
+})
 
 app.register(fastifySwagger, {
   openapi: {
